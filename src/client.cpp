@@ -70,7 +70,17 @@ void Client::start() {
         send(clientSocket, message.c_str(), message.size(), 0);
 
         char buffer[1024] = {0};
+        // int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
+        // std::cout << "Server: " << buffer;
         int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
-        std::cout << "Server: " << buffer;
+        if (bytesRead > 0) {
+            std::cout << "Server: " << std::string(buffer, bytesRead) << std::endl;
+        } else if (bytesRead == 0) {
+            std::cout << "Server closed the connection." << std::endl;
+            break;
+        } else {
+            std::cerr << "Error receiving data from server." << std::endl;
+            break;
+        }
     }
 }
