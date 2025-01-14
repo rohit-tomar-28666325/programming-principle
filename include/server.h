@@ -9,24 +9,21 @@
 #include <cstring>
 #include <netinet/in.h>
 
-
-
-class Server {
+class Server
+{
 private:
-    int serverSocket;
-    LibraryManager libraryManager; // To interact with the library system
-    std::vector<std::thread> clientThreads;
+    int serverSocket;                       // Socket file descriptor
+    LibraryManager libraryManager;          // To interact with the library system
+    std::vector<std::thread> clientThreads; // Vector to store client threads
 
-    void handleClient(int clientSocket, LibraryManager& libraryManager);
+    void handleClient(int clientSocket, LibraryManager &libraryManager);
 
 public:
-    int port = 8080;
-	Server(LibraryManager* libraryManager);
-    
+    int port = 8080; // Port number for the server
+    Server(LibraryManager *libraryManager);
     ~Server();
 
-    void killProcessUsingPort();
-
+    void killProcessUsingPort(); // Kill the process using the port to free it
     void start();
 };
 

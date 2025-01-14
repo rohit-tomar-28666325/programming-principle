@@ -7,21 +7,21 @@
 #include <fstream>
 #include <vector>
 
-class LibraryManager {
+class LibraryManager
+{
 private:
-    static Library library;
-    // std::vector<User> users;                  
-    vector<Transaction> transactions;
+    static Library library; // Library object
+    // std::vector<User> users;
+    vector<Transaction> transactions; // vector of Transaction objects
 
 public:
     ~LibraryManager();
-    void start();                     
-    void logTransaction(const Transaction& transaction);  
-    void displayTransactions() const; 
+    void start();                                        // Start the library management system
+    void logTransaction(const Transaction &transaction); // Log a transaction
+    void displayTransactions() const;
     void saveData() const;
     void loadData();
-    std::tm calculateFutureDate(const std::tm& currentDate, int daysToAdd);
+    std::tm calculateFutureDate(const std::tm &currentDate, int daysToAdd); // Calculate the future date, this give the due date of the book
     static Library getLibrary() { return library; }
     size_t getTransactionCount() const { return transactions.size(); }
-
 };

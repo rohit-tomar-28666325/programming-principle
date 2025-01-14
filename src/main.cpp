@@ -6,17 +6,21 @@
 #include "../include/client.h"
 #include <csignal>
 
-Server* serverInstance = nullptr;
-LibraryManager* libraryManager = nullptr;
+Server *serverInstance = nullptr;
+LibraryManager *libraryManager = nullptr;
 
-void signalHandler(int signum) {
+// Signal handler for SIGINT (Ctrl+C)
+void signalHandler(int signum)
+{
     std::cout << "Interrupt signal (" << signum << ") received.\n";
-    if (libraryManager) {
+    if (libraryManager)
+    {
         libraryManager->saveData();
         delete libraryManager;
         libraryManager = nullptr;
     }
-    if (serverInstance) {
+    if (serverInstance)
+    {
         serverInstance->killProcessUsingPort();
         delete serverInstance;
         serverInstance = nullptr;
@@ -24,25 +28,31 @@ void signalHandler(int signum) {
     exit(signum);
 }
 
-
-void runConsoleApp() {
+// Run the console application
+void runConsoleApp()
+{
     libraryManager = new LibraryManager();
     libraryManager->start();
 }
 
-void runServer() {
+// Run the server
+void runServer()
+{
     libraryManager = new LibraryManager();
     libraryManager->loadData();
     serverInstance = new Server(libraryManager);
     serverInstance->start();
 }
 
-void runClient() {
+// Run the client
+void runClient()
+{
     Client client;
     client.start();
 }
 
-int main() {
+int main()
+{
 
     signal(SIGINT, signalHandler);
 
@@ -55,18 +65,19 @@ int main() {
     std::cout << "Enter your choice: ";
     std::cin >> choice;
 
-    switch (choice) {
-        case 1:
-            runConsoleApp();
-            break;
-        case 2:
-            runServer();
-            break;
-        case 3:
-            runClient();
-            break;
-        default:
-            std::cout << "Invalid choice. Exiting...\n";
+    switch (choice)
+    {
+    case 1:
+        runConsoleApp();
+        break;
+    case 2:
+        runServer();
+        break;
+    case 3:
+        runClient();
+        break;
+    default:
+        std::cout << "Invalid choice. Exiting...\n";
     }
 
     return 0;

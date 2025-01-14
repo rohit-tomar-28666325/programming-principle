@@ -7,9 +7,10 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
-class Client {
+class Client
+{
 private:
-    int clientSocket;
+    int clientSocket; // Socket file descriptor
 
 public:
     Client();
